@@ -1,0 +1,49 @@
+import random as r
+import numpy as np
+
+grid_size = 6
+sensors_range = [3,2,2,1]
+initial = [[0,0], [0,4], [3,4], [4,2]] # Dónde empiezan nuestros 4 sensores
+grid = [['-','-','#','#','-','#'], ['-','#','#','-','-','-'], ['#','#','-','-','-','-'], ['-','-','-','-','-','-'], 
+        ['#','#','#','-','-','-'], ['-','-','-','-','#','#']] #definido en el ejercicio
+defined_actions = {'E': (1, 0), 'N': (0, 1), 'S': (0, -1), 'W': (-1, 0)}
+sensors = []
+for i in range(0, len(sensors_range)):
+    sensor_size = sensors_range[i]
+    for j in range (0, len(grid)):
+        for k in range (0, len(grid[j])):
+            g = [j,k]
+            print (g)
+            if np.all(np.asarray(initial[i]) == np.asarray(g)):
+                rng = sensors_range [i] 
+                for n in range (0, rng):
+                    for m in range (0, rng):
+                        if grid [j+m][k] == '-':
+                            grid [j+m][k] = i+1
+                        if grid [j+m][k+n] == '-':
+                            grid [j+m][k+n] = i+1
+                        if grid [j][k+n] == '-':
+                            grid [j][k+n] = i+1
+for i in range(0,6):
+    for j in range(0,6):
+        print(grid[i][j], end="  ")
+    print()
+    
+X=0
+for j in range (0, len(grid)):
+        for k in range (0, len(grid[j])):
+            if grid [j][k] == '-':
+               X=X+1
+X = 24-X
+print(X)
+
+New_state = []
+for i in range (0, 4):
+    R=[]
+    sensor_size = sensors_range[i]
+    s= 6 - sensor_size
+    for j in range (0,2):
+        rand = r.randint(0,s)
+        R.append (rand)
+    New_state.append(R)
+print (New_state)
